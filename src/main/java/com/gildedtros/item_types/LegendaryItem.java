@@ -3,9 +3,9 @@ package com.gildedtros.item_types;
 import com.gildedtros.domain.Item;
 import com.gildedtros.visitor.ItemVisitor;
 
-public class DeprecatedItem extends TypedItem {
+public class LegendaryItem extends TypedItem {
 
-    public DeprecatedItem(Item item) {
+    public LegendaryItem(Item item) {
         super(item);
     }
 
@@ -16,7 +16,7 @@ public class DeprecatedItem extends TypedItem {
 
     @Override
     public String toString() {
-        return "DeprecatedItem{" +
+        return "ProgrammerItem{" +
                 "item=" + item +
                 '}';
     }

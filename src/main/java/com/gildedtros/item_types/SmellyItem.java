@@ -3,9 +3,9 @@ package com.gildedtros.item_types;
 import com.gildedtros.domain.Item;
 import com.gildedtros.visitor.ItemVisitor;
 
-public class ProgrammerItem extends TypedItem {
+public class SmellyItem extends TypedItem {
 
-    public ProgrammerItem(Item item) {
+    public SmellyItem(Item item) {
         super(item);
     }
 
@@ -16,7 +16,7 @@ public class ProgrammerItem extends TypedItem {
 
     @Override
     public String toString() {
-        return "ProgrammerItem{" +
+        return "DeprecatedItem{" +
                 "item=" + item +
                 '}';
     }

@@ -5,11 +5,17 @@ import com.gildedtros.item_types.TypedItem;
 import com.gildedtros.mapper.ItemTypeMapper;
 import com.gildedtros.visitor.ItemVisitor;
 
+import java.util.List;
+
 class GildedTros {
     Item[] items;
 
     public GildedTros(Item[] items) {
         this.items = items;
+    }
+
+    public GildedTros(List<Item> items) {
+        this(items.toArray(new Item[0]));
     }
 
     public void updateQuality() {

@@ -26,13 +26,13 @@ public class UpdateQualityVisitor implements ItemVisitor {
     }
 
     @Override
-    public void visit(DeprecatedItem item) {
+    public void visit(SmellyItem item) {
         item.decreaseSellInByOne();
-        item.setQuality(0);
+        item.decreaseQuality(item.getSellIn() < 0 ? 4 : 2);
     }
 
     @Override
-    public void visit(ProgrammerItem item) {
+    public void visit(LegendaryItem item) {
         // Legendary items shouldn't change
     }
 

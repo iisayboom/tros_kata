@@ -5,17 +5,12 @@ import com.gildedtros.item_types.*;
 
 public class ItemTypeMapper {
     public static TypedItem map(Item item) {
-        switch (item.name) {
-            case "Good Wine":
-                return new GoodWine(item);
-            case "Backstage passes for Re:Factor":
-                return new BackstagePasses(item);
-            case "B-DAWG Keychain":
-                return new ProgrammerItem(item);
-        }
-        if (item.name.startsWith("Duplicate"))
-            return new DeprecatedItem(item);
-
-        return new RegularItem(item);
+        return switch (item.name) {
+            case "Good Wine" -> new GoodWine(item);
+            case "Backstage passes for Re:Factor", "Backstage passes for HAXX" -> new BackstagePasses(item);
+            case "B-DAWG Keychain" -> new LegendaryItem(item);
+            case "Duplicate Code", "Long Methods", "Ugly Variable Names" -> new SmellyItem(item);
+            default -> new RegularItem(item);
+        };
     }
 }
