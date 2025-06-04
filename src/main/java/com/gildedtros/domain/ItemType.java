@@ -5,5 +5,6 @@ public enum ItemType {
     GOOD_WINE,
     BACKSTAGE_REF,
     BACKSTAGE_HAXX,
-    LEGENDARY
+    LEGENDARY,
+    SMELLY
 }

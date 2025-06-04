@@ -27,6 +27,7 @@ class GildedTros {
         updaters.put(ItemType.BACKSTAGE_REF, new BackstagePassUpdater());
         updaters.put(ItemType.BACKSTAGE_HAXX, new BackstagePassUpdater());
         updaters.put(ItemType.LEGENDARY, new LegendaryItemUpdater());
+        updaters.put(ItemType.SMELLY, new SmellyItemUpdater());
     }
 
     public void updateQuality() {

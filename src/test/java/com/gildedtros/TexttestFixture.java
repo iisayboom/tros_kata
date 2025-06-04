@@ -18,7 +18,8 @@ public class TexttestFixture {
                 // these smelly items do not work properly yet
                 new Item("Duplicate Code", 3, 6),
                 new Item("Long Methods", 3, 6),
-                new Item("Ugly Variable Names", 3, 6) };
+                new Item("Ugly Variable Names", 3, 6)
+        };
 
         GildedTros app = new GildedTros(items);
 
