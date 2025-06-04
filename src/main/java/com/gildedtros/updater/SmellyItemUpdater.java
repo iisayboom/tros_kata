@@ -10,7 +10,7 @@ public class SmellyItemUpdater implements ItemUpdater {
 
     @Override
     public void update(TypedItem typedItem) {
-        Item item = typedItem.getItem();
+        Item item = typedItem.item();
         item.sellIn--;
 
         int baseDegradation = isExpired(item) ? 2 : 1;

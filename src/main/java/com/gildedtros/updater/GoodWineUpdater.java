@@ -10,7 +10,7 @@ public class GoodWineUpdater implements ItemUpdater {
 
     @Override
     public void update(TypedItem typedItem) {
-        Item item = typedItem.getItem();
+        Item item = typedItem.item();
         item.sellIn--;
 
         if (canIncreaseQuality(item)) {

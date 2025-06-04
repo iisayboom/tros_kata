@@ -11,7 +11,7 @@ public class NormalItemUpdater implements ItemUpdater {
 
     @Override
     public void update(TypedItem typedItem) {
-        Item item = typedItem.getItem();
+        Item item = typedItem.item();
         item.sellIn--;
 
         int degradeQualityBy = isExpired(item) ? EXPIRED_DEGRADATION : NORMAL_DEGRADATION;
