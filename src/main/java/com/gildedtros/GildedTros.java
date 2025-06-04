@@ -4,6 +4,7 @@ import com.gildedtros.domain.Item;
 import com.gildedtros.item_types.TypedItem;
 import com.gildedtros.mapper.ItemTypeMapper;
 import com.gildedtros.visitor.ItemVisitor;
+import com.gildedtros.visitor.UpdateQualityVisitor;
 
 import java.util.List;
 
