@@ -1,10 +1,16 @@
 package com.gildedtros;
 
+import java.util.List;
+
 class GildedTros {
     Item[] items;
 
     public GildedTros(Item[] items) {
         this.items = items;
+    }
+
+    public GildedTros(List<Item> items) {
+        this.items = items.toArray(new Item[0]);
     }
 
     public void updateQuality() {
