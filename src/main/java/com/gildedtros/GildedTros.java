@@ -1,9 +1,12 @@
 package com.gildedtros;
 
+import com.gildedtros.domain.TypedItem;
+import com.gildedtros.mapper.ItemTypeMapper;
+
 import java.util.List;
 
 class GildedTros {
-    Item[] items;
+    private final Item[] items;
 
     public GildedTros(Item[] items) {
         this.items = items;
@@ -14,57 +17,44 @@ class GildedTros {
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Good Wine")
-                    && !items[i].name.equals("Backstage passes for Re:Factor")
-                    && !items[i].name.equals("Backstage passes for HAXX"))
-            {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("B-DAWG Keychain")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
+        for (Item item : items) {
+            TypedItem typedItem = new TypedItem(item, ItemTypeMapper.map(item));
+            updateItem(typedItem);
+        }
+    }
 
-                    if (items[i].name.equals("Backstage passes for Re:Factor") || items[i].name.equals("Backstage passes for HAXX") ) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
+    private void updateItem(TypedItem typedItem) {
+        Item item = typedItem.getItem();
 
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
+        switch (typedItem.getType()) {
+            case LEGENDARY -> {
+                // no changes needed for legendary items
+            }
+            case GOOD_WINE -> {
+                item.sellIn--;
+                if (item.quality < 50) {
+                    item.quality++;
                 }
             }
+            case BACKSTAGE_REF, BACKSTAGE_HAXX -> {
+                item.sellIn--;
 
-            if (!items[i].name.equals("B-DAWG Keychain")) {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
-
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Good Wine")) {
-                    if (!items[i].name.equals("Backstage passes for Re:Factor") && !items[i].name.equals("Backstage passes for HAXX")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("B-DAWG Keychain")) {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
+                if (item.sellIn < 0) {
+                    item.quality = 0;
+                } else if (item.sellIn < 5) {
+                    item.quality = Math.min(50, item.quality + 3);
+                } else if (item.sellIn < 10) {
+                    item.quality = Math.min(50, item.quality + 2);
                 } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
+                    item.quality = Math.min(50, item.quality + 1);
                 }
+            }
+            case NORMAL -> {
+                item.sellIn--;
+                int degrade = (item.sellIn < 0) ? 2 : 1;
+                item.quality = Math.max(0, item.quality - degrade);
             }
         }
     }
+
 }
