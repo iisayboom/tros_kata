@@ -1,6 +1,5 @@
 package com.gildedtros.domain;
 
-import com.gildedtros.Item;
 import lombok.Data;
 
 @Data

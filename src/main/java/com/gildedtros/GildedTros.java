@@ -1,59 +1,39 @@
 package com.gildedtros;
 
+import com.gildedtros.domain.Item;
+import com.gildedtros.domain.ItemType;
 import com.gildedtros.domain.TypedItem;
 import com.gildedtros.mapper.ItemTypeMapper;
+import com.gildedtros.updater.*;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 class GildedTros {
     private final Item[] items;
+    private final Map<ItemType, ItemUpdater> updaters;
+
+    public GildedTros(List<Item> items) {
+        this(items.toArray(new Item[0]));
+    }
 
     public GildedTros(Item[] items) {
         this.items = items;
-    }
+        this.updaters = new EnumMap<>(ItemType.class);
 
-    public GildedTros(List<Item> items) {
-        this.items = items.toArray(new Item[0]);
+        updaters.put(ItemType.NORMAL, new NormalItemUpdater());
+        updaters.put(ItemType.GOOD_WINE, new GoodWineUpdater());
+        updaters.put(ItemType.BACKSTAGE_REF, new BackstagePassUpdater());
+        updaters.put(ItemType.BACKSTAGE_HAXX, new BackstagePassUpdater());
+        updaters.put(ItemType.LEGENDARY, new LegendaryItemUpdater());
     }
 
     public void updateQuality() {
         for (Item item : items) {
             TypedItem typedItem = new TypedItem(item, ItemTypeMapper.map(item));
-            updateItem(typedItem);
-        }
-    }
-
-    private void updateItem(TypedItem typedItem) {
-        Item item = typedItem.getItem();
-
-        switch (typedItem.getType()) {
-            case LEGENDARY -> {
-                // no changes needed for legendary items
-            }
-            case GOOD_WINE -> {
-                item.sellIn--;
-                if (item.quality < 50) {
-                    item.quality++;
-                }
-            }
-            case BACKSTAGE_REF, BACKSTAGE_HAXX -> {
-                item.sellIn--;
-
-                if (item.sellIn < 0) {
-                    item.quality = 0;
-                } else if (item.sellIn < 5) {
-                    item.quality = Math.min(50, item.quality + 3);
-                } else if (item.sellIn < 10) {
-                    item.quality = Math.min(50, item.quality + 2);
-                } else {
-                    item.quality = Math.min(50, item.quality + 1);
-                }
-            }
-            case NORMAL -> {
-                item.sellIn--;
-                int degrade = (item.sellIn < 0) ? 2 : 1;
-                item.quality = Math.max(0, item.quality - degrade);
-            }
+            ItemUpdater updater = updaters.get(typedItem.getType());
+            updater.update(typedItem);
         }
     }
 

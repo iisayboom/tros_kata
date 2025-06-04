@@ -1,5 +1,6 @@
 package com.gildedtros;
 
+import com.gildedtros.domain.Item;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -120,5 +121,16 @@ class GildedTrosTest {
         app.updateQuality();
 
         assertThat(item.quality).isEqualTo(50);
+    }
+
+    @Test
+    void backstageHaxx_increasesBy2If10DaysOrLess() {
+        Item item = new Item("Backstage passes for HAXX", 10, 20);
+        GildedTros app = new GildedTros(List.of(item));
+
+        app.updateQuality();
+
+        assertThat(item.quality).isEqualTo(22);
+        assertThat(item.sellIn).isEqualTo(9);
     }
 }

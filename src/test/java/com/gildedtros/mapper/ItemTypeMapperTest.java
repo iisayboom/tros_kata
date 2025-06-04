@@ -1,6 +1,6 @@
 package com.gildedtros.mapper;
 
-import com.gildedtros.Item;
+import com.gildedtros.domain.Item;
 import com.gildedtros.domain.ItemType;
 import org.junit.jupiter.api.Test;
 
